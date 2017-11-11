@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"module": "system",
+		"target": "es5",
+		"noImplicitAny": false,
+		"sourceMap": true,
+		"declaration": true,
+		"outFile": "bin/features.js",
+		"lib": [
+			"dom",
+			"es6",
+			"es7"
+		]
+	},
+	"include": [
+		"src"
+	]
+}
