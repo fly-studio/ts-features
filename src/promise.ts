@@ -47,50 +47,52 @@ Promise.prototype.finally = function (callback: Function) {
 	);
 };
 
-/**
- * 
- * @param promiseList 
- */
-function* promises(promiseList: Promise<any>[]) {
-	let results = [];
-	try {
-		for (let p of promiseList)
- 			results.push(yield p instanceof Promise);
-	} catch (e) {
- 		return false; //failure
-	}
-	return results; //success
-}
-/**
- * 有callback的函数，用此函数封装
- * 
- * @example
- * function c(args, callback) {callback(...)};
- * thunkify(c)(args)(callback);
- * @param fn 
- */
-function thunkify(fn: Function) :Function {
-	return function () {
-		var args = new Array(arguments.length);
-		var ctx = this;
-
-		for (var i = 0; i < args.length; ++i) {
-			args[i] = arguments[i];
+namespace _ {
+	/**
+	 * 
+	 * @param promiseList 
+	 */
+	export function* promises(promiseList: Promise<any>[]) {
+		let results = [];
+		try {
+			for (let p of promiseList)
+				results.push(yield p instanceof Promise);
+		} catch (e) {
+			return false; //failure
 		}
+		return results; //success
+	}
+	/**
+	 * 有callback的函数，用此函数封装
+	 * 
+	 * @example
+	 * function c(args, callback) {callback(...)};
+	 * thunkify(c)(args)(callback);
+	 * @param fn 
+	 */
+	export function thunkify(fn: Function): Function {
+		return function () {
+			var args = new Array(arguments.length);
+			var ctx = this;
 
-		return function (done) {
-			var called;
+			for (var i = 0; i < args.length; ++i) {
+				args[i] = arguments[i];
+			}
 
-			args.push(function () {
-				if (called) return;
-				called = true;
-				done.apply(null, arguments);
-			});
+			return function (done) {
+				var called;
 
-			try {
-				fn.apply(ctx, args);
-			} catch (err) {
-				done(err);
+				args.push(function () {
+					if (called) return;
+					called = true;
+					done.apply(null, arguments);
+				});
+
+				try {
+					fn.apply(ctx, args);
+				} catch (err) {
+					done(err);
+				}
 			}
 		}
 	}
