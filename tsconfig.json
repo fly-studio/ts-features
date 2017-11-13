@@ -5,6 +5,7 @@
 		"noImplicitAny": false,
 		"sourceMap": true,
 		"declaration": true,
+		"downlevelIteration": true,
 		"outFile": "bin/features.js",
 		"lib": [
 			"dom",

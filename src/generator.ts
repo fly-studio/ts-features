@@ -54,4 +54,28 @@ namespace _ {
 
 		return go(it.next());
 	}
+
+	export function* takeIterator(xs: any, n : number) {
+		if (n === 0) return;
+		let i:number = 0;
+		for (let x of xs) {
+			yield x;
+			if (++i === n) break;
+		}
+	}
+
+	export function* naturals(start: number) {
+		start = start == null ? 0 : start;
+		while (1) yield start++;
+	}
+
+	export function* range(start: number, end?: number) {
+		if (end == null)
+		{
+			end = start;
+			start = 0;
+		}
+
+		yield* takeIterator(naturals(start), end - start);
+	}
 }
