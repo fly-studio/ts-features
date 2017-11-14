@@ -1,4 +1,4 @@
-namespace _ {
+namespace f {
 	export function deepCopy(obj: any) : any {
 		let copy: any;
 

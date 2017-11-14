@@ -47,7 +47,7 @@ Promise.prototype.finally = function (callback: Function) {
 	);
 };
 
-namespace _ {
+namespace f {
 	/**
 	 * 
 	 * @param promiseList 

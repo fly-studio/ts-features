@@ -1,4 +1,4 @@
-namespace _ {
+namespace f {
 	function isSpecificValue(val) : boolean {
 		return (
 			/* val instanceof Buffer
